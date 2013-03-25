@@ -1,0 +1,8 @@
+IRC notifier
+============
+
+This is an experiment with github.com/fluffle/goirc IRC client library for go.
+
+What the simple app does is notify you when a specified word is mentioned on a
+specified channel. Notification is done by sending a message:
+[your_nick] ^^^
