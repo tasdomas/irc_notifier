@@ -1,0 +1,9 @@
+botnick: thebot # the bot's nick'
+network: irc.freenode.net # IRC network host
+port: 8001 # IRC port
+ssl: off # use SSL?
+password: # network connection password
+channels: # list of channels to watch
+  - name: '#somechannel' # channel name
+    watch: comas # word to watch for
+    nick: domas # nick to notify

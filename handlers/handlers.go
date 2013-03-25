@@ -8,9 +8,9 @@ import (
 	"regexp"
 )
 
-type NickPair struct {
-	Wrong string
-	Right string
+type WatchList struct {
+	Watch string
+	Nick  string
 }
 
 func CreateConnectedHandler(conf *config.Config) irc.Handler {
@@ -23,11 +23,11 @@ func CreateConnectedHandler(conf *config.Config) irc.Handler {
 }
 
 func CreateWrongNickHandler(conf *config.Config) irc.Handler {
-	nicks := make(map[string]NickPair)
+	nicks := make(map[string]WatchList)
 	for _, channel := range conf.Channels {
-		nicks[channel.Name] = NickPair{
-			Wrong: channel.FalseNick,
-			Right: channel.TrueNick,
+		nicks[channel.Name] = WatchList{
+			Watch: channel.Watch,
+			Nick:  channel.Nick,
 		}
 	}
 
@@ -41,12 +41,12 @@ func CreateWrongNickHandler(conf *config.Config) irc.Handler {
 			return
 		}
 
-		matched, err := regexp.MatchString(fmt.Sprintf("\\b%s\\b", nickPair.Wrong), msg)
+		matched, err := regexp.MatchString(fmt.Sprintf("\\b%s\\b", nickPair.Watch), msg)
 		if err != nil {
 			log.Printf("%v", err)
 		}
 		if matched {
-			conn.Privmsg(channel, fmt.Sprintf("%s: ^^^", nickPair.Right))
+			conn.Privmsg(channel, fmt.Sprintf("%s: ^^^", nickPair.Nick))
 		}
 	}
 }

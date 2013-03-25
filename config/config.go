@@ -10,9 +10,9 @@ import (
 )
 
 type ChannelConfig struct {
-	Name      string
-	FalseNick string
-	TrueNick  string
+	Name  string
+	Watch string
+	Nick  string
 }
 
 type Config struct {
