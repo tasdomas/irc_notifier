@@ -3,6 +3,7 @@ package main
 import (
 	"./config"
 	"./handlers"
+	"crypto/tls"
 	"flag"
 	"fmt"
 	irc "github.com/fluffle/goirc/client"
@@ -25,7 +26,17 @@ func main() {
 	}
 
 	c := irc.SimpleClient(conf.BotNick)
-	c.SSL = conf.SSL
+	if conf.SSL {
+		c.SSL = conf.SSL
+		cert, err := tls.LoadX509KeyPair(conf.CertFile, conf.KeyFile)
+		if err != nil {
+			println(err.Error())
+			os.Exit(1)
+		}
+		c.SSLConfig = &tls.Config{Certificates: []tls.Certificate{cert}}
+		c.SSLConfig.BuildNameToCertificate()
+		c.SSLConfig.InsecureSkipVerify = true
+	}
 
 	c.AddHandler(irc.CONNECTED,
 		handlers.CreateConnectedHandler(conf))

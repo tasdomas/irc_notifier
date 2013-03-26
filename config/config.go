@@ -20,6 +20,8 @@ type Config struct {
 	Network  string
 	Port     int
 	SSL      bool
+	CertFile string
+	KeyFile  string
 	Password string
 	Channels []ChannelConfig
 }
